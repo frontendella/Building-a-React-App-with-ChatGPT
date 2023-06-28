@@ -1,0 +1,45 @@
+.App {
+  text-align: center;
+}
+
+.Player {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.DeleteButton {
+  visibility: hidden;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: none;
+  background-color: #ff4b5c;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.Player:hover .DeleteButton {
+  visibility: visible;
+}
+
+.PlayerName {
+  flex-grow: 1;
+  font-weight: bold;
+}
+
+.Score button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.Score span {
+  margin: 0 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
