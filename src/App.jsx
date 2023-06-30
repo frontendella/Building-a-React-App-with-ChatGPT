@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import Header from './components/Header';
+import Player from './components/Player';
+import AddPlayerForm from './components/AddPlayerForm';
 import './App.css';
 
-function App() {
+const App = () => {
   const [players, setPlayers] = useState([
     { id: 1, name: 'Laura', score: 0 },
     { id: 2, name: 'Dustin', score: 0 },
@@ -24,25 +27,40 @@ function App() {
     setPlayers((prevPlayers) => prevPlayers.filter((player) => player.id !== id));
   };
 
+  const handleAddPlayer = (name) => {
+    setPlayers((prevPlayers) => [
+      ...prevPlayers,
+      { id: Date.now(), name: name, score: 0 },
+    ]);
+  };
+
+  const getHighestScore = () => {
+    let highestScore = 0;
+    players.forEach((player) => {
+      if (player.score > highestScore) {
+        highestScore = player.score;
+      }
+    });
+    return highestScore;
+  };
+
   return (
     <div className="App">
-      <h1>SCOREBOARD</h1>
-      <h2>PLAYERS: {players.length}</h2>
-      {players.map((player) => (
-        <div key={player.id} className="Player">
-          <button className="DeleteButton" onClick={() => handleDeletePlayer(player.id)}>
-            X
-          </button>
-          <div className="PlayerName">{player.name}</div>
-          <div className="Score">
-            <button onClick={() => handleScoreChange(player.id, -1)}>-</button>
-            <span>{player.score}</span>
-            <button onClick={() => handleScoreChange(player.id, 1)}>+</button>
-          </div>
-        </div>
-      ))}
+      <Header players={players} />
+      <div className="Players">
+        {players.map((player) => (
+          <Player
+            key={player.id}
+            player={player}
+            onScoreChange={handleScoreChange}
+            onDeletePlayer={handleDeletePlayer}
+            isHighestScore={player.score === getHighestScore()}
+          />
+        ))}
+      </div>
+      <AddPlayerForm onAddPlayer={handleAddPlayer} />
     </div>
   );
-}
+};
 
 export default App;
